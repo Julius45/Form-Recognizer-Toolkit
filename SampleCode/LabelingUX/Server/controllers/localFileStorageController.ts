@@ -50,3 +50,16 @@ export const deleteFile = catchAsyncError(async (req: Request, res: Response, ne
         throw err;
     }
 });
+
+export const createFile = catchAsyncError(async (req: Request, res: Response, next: NextFunction) => {
+    const { params, body } = req;
+    try {
+        await writeFile(`${dataLocation}/${params.filename}`, body.content);
+        res.status(201).send({
+            success: true,
+        });
+    } catch (err: any) {
+        err.statusCode = 404;
+        throw err;
+    }
+});

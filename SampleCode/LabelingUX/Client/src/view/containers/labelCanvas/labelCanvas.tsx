@@ -16,6 +16,8 @@ import withOcr from "view/components/withOcr/withOcr";
 import withTable from "view/components/withTable/withTable";
 import withCustomModelLabel from "view/containers/withCustomModelLabel/withCustomModelLabel";
 
+import { ApiButton } from "view/components/buttons/buttons";
+
 import "./labelCanvas.scss";
 
 const WrappedImageMap = withCustomModelLabel(withTable(withOcr(ImageMap)));
@@ -152,6 +154,7 @@ export class LabelCanvas extends React.PureComponent<LabelCanvasProps, ILabelCan
                         disabled={isButtonDisabled}
                         checked={drawRegionMode}
                     />
+                    <ApiButton disabled={isButtonDisabled} />
                     <LayerFilter
                         disabled={isButtonDisabled}
                         onItemClick={this.handleLayerFilterChange}

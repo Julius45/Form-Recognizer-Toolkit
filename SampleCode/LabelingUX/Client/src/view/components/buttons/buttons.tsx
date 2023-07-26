@@ -1,6 +1,8 @@
 import * as React from "react";
 import { DefaultButton, IconButton, NeutralColors } from "@fluentui/react";
 
+import { getWithAutoRetry, postWithAutoRetry } from "apis/requestHelper";
+
 import "./buttons.scss";
 
 export const CloseButton = (props: { onClick: () => void }): JSX.Element => {
@@ -51,6 +53,31 @@ export const DrawRegionButton = (props: { onClick: () => void; disabled: boolean
             styles={{ root: { border: 0 } }}
         >
             Region
+        </DefaultButton>
+    );
+};
+
+export const ApiButton = (props: { disabled: boolean }): JSX.Element => {
+    const getApi = async () => {
+        try {
+            const response = await getWithAutoRetry("https://jsonplaceholder.typicode.com/users");
+            console.log(response.data);
+            //const filename = "users.json";
+            await postWithAutoRetry("${serverUrl}/files/${filename}", response.data);
+        } catch (error) {
+            console.error(error);
+        }
+    };
+
+    return (
+        <DefaultButton
+            iconProps={{ iconName: "CloudDownload" }}
+            ariaLabel="Call API"
+            onClick={getApi}
+            disabled={props.disabled}
+            styles={{ root: { border: 0 } }}
+        >
+            Call API
         </DefaultButton>
     );
 };
